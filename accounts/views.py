@@ -1,7 +1,7 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
-from django.conf import settings
 
 from .forms import SignupForm
 
