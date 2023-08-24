@@ -133,4 +133,4 @@ LOGIN_REDIRECT_URL = "tweets:home"
 
 LOGOUT_URL = "accounts:logout"
 
-LOGOUT_REDIRECT_URL = "welcome:welcome"
+LOGOUT_REDIRECT_URL = "accounts:login"
