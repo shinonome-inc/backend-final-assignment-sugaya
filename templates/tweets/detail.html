@@ -3,16 +3,14 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Homeです</h1>
-{% for tweet in tweets %}
-<hr>
+<h1>Tweet details</h1>
 <ul>
   <li>{{ tweet.content }}</li>
   <li>{{ tweet.user.username }}</li>
   <li>{{ tweet.created_at }}</li>
   <li>{{ tweet.id }}</li>
-  <li><a href="{% url 'tweets:detail' tweet.pk %}">詳細</a></li>
+  {% if tweet.user == user %}
+    <li><a href="{% url 'tweets:delete' tweet.pk %}">削除</a></li>
+  {% endif %}
 </ul>
-{% endfor %}
-
 {% endblock %}

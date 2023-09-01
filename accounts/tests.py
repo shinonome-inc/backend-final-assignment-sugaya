@@ -3,6 +3,8 @@ from django.contrib.auth import SESSION_KEY, get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
+from tweets.models import Tweet
+
 User = get_user_model()
 
 
@@ -274,8 +276,15 @@ class TestLogoutView(TestCase):
         self.assertNotIn(SESSION_KEY, self.client.session)
 
 
-# class TestUserProfileView(TestCase):
-#     def test_success_get(self):
+class TestUserProfileView(TestCase):
+    def test_success_get(self):
+        self.user = User.objects.create_user(username="tester", password="testpassword")
+        self.client.login(username="tester", password="testpassword")
+        self.url = reverse("accounts:user_profile", kwargs={"username": self.user.username})
+        response = self.client.get(self.url)
+        tweet = Tweet.objects.filter(user=self.user)
+        actual_tweet = response.context["tweets"]
+        self.assertQuerysetEqual(actual_tweet, tweet)
 
 
 # class TestUserProfileEditView(TestCase):
