@@ -8,7 +8,7 @@
 <hr>
 <ul>
   <li>{{ tweet.content }}</li>
-  <li>{{ tweet.user.username }}</li>
+  <li><a href="{% url 'accounts:user_profile' tweet.user.username %}">{{tweet.user.username }}</a></li>
   <li>{{ tweet.created_at }}</li>
   <li>{{ tweet.id }}</li>
   <li><a href="{% url 'tweets:detail' tweet.pk %}">詳細</a></li>

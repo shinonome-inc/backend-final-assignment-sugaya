@@ -3,7 +3,6 @@
 {% block title %}Logout{% endblock %}
 
 {% block content %}
-<p>{{ user.username }}</p>
 
 {% for tweet in tweets %}
   <hr>
@@ -12,6 +11,7 @@
     <li>{{ tweet.user.username }}</li>
     <li>{{ tweet.created_at }}</li>
     <li>{{ tweet.id }}</li>
+    <li><a href="{% url 'tweets:detail' tweet.pk %}">詳細</a></li>
   </ul>
 {% endfor %}
 
