@@ -15,9 +15,8 @@
         <li><a href="{% url 'accounts:login' %}">Log in</a></li>
         <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
         <li><a href="{% url 'tweets:create' %}">Tweet</a></li>
-        <li><a href="{% url 'accounts:user_profile' user.username %}">Your profile</a></li>
         {% if user.is_authenticated %}
-        <li>You are logged in as {{ user.username }}</li>
+          <li>You are logged in as <a href="{% url 'accounts:user_profile' user.username %}">{{ user.username }}</a></li>
         {% endif %}
       </ul>
     </nav>
