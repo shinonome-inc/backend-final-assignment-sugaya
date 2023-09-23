@@ -66,8 +66,9 @@ class TestTweetCreateView(TestCase):
             "content": content_data,
         }
         response = self.client.post(self.url, tweet_data)
+        form = response.context["form"]
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, "form", "content", "このフィールドは必須です。")
+        self.assertEqual(form.errors["content"], ["このフィールドは必須です。"])
         self.assertEqual(Tweet.objects.filter(content=content_data).count(), 0)
 
     def test_failure_post_with_too_long_content(self):
@@ -76,8 +77,9 @@ class TestTweetCreateView(TestCase):
             "content": content_data,
         }
         response = self.client.post(self.url, tweet_data)
+        form = response.context["form"]
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, "form", "content", "この値は 140 文字以下でなければなりません( 141 文字になっています)。")
+        self.assertEqual(form.errors["content"], ["この値は 140 文字以下でなければなりません( 141 文字になっています)。"])
         self.assertEqual(Tweet.objects.filter(content=content_data).count(), 0)
 
 
