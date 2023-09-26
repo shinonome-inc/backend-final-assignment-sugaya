@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Tweet details</h1>
+<ul>
+  <li>{{ tweet.content }}</li>
+  <li><a href="{% url 'accounts:user_profile' tweet.user.username %}">{{ tweet.user.username }}</a></li>
+  <li>{{ tweet.created_at }}</li>
+  <li>{{ tweet.id }}</li>
+  {% if tweet.user == user %}
+    <li><a href="{% url 'tweets:delete' tweet.pk %}">削除</a></li>
+  {% endif %}
+</ul>
+{% endblock %}

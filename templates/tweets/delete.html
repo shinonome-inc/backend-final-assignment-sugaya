@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Tweet delete confirmation</h1>
+<form method="post">
+  {% csrf_token %}
+  <p>以下のツイートを本当に削除しますか？</p>
+  <input type="submit" value="削除">
+<ul>
+  <li>{{ tweet.content }}</li>
+  <li>{{ tweet.user.username }}</li>
+  <li>{{ tweet.created_at }}</li>
+  <li>{{ tweet.id }}</li>
+</ul>
+{% endblock %}
