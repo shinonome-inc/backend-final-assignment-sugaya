@@ -139,7 +139,11 @@ HOME_URL = "tweets:home"
 
 TWEET_CREATE_URL = "tweets:create"
 
-SQL_DEBUG = False
+FOLLOW_URL = "accounts:follow"
+
+UNFOLLOW_URL = "accounts:unfollow"
+
+SQL_DEBUG = True
 
 if SQL_DEBUG:
 

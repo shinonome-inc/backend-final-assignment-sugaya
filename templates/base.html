@@ -11,11 +11,14 @@
     <nav>
       <ul>
         <li><a href="{% url 'welcome:welcome' %}">Twitter clone</a></li>
-        <li><a href="{% url 'tweets:home' %}">Home</a></li>
-        <li><a href="{% url 'accounts:signup' %}">Sign up</a></li>
-        <li><a href="{% url 'accounts:login' %}">Log in</a></li>
-        <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
-        <li><a href="{% url 'tweets:create' %}">Tweet</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'tweets:home' %}">Home</a></li>
+          <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
+          <li><a href="{% url 'tweets:create' %}">Tweet</a></li>
+        {% else %}
+          <li><a href="{% url 'accounts:signup' %}">Sign up</a></li>
+          <li><a href="{% url 'accounts:login' %}">Log in</a></li>
+        {% endif %}
         {% if user.is_authenticated %}
           <li>You are logged in as <a href="{% url 'accounts:user_profile' user.username %}">{{ user.username }}</a></li>
         {% endif %}
