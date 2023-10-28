@@ -3,8 +3,6 @@ from django.contrib.auth import SESSION_KEY, get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from tweets.models import Tweet
-
 from .models import FriendShip
 
 User = get_user_model()
@@ -281,16 +279,24 @@ class TestLogoutView(TestCase):
 class TestUserProfileView(TestCase):
     def test_success_get(self):
         self.user = User.objects.create_user(username="tester1", password="testpassword")
-        self.user = User.objects.create_user(username="tester2", password="testpassword")
-        self.user = User.objects.create_user(username="tester3", password="testpassword")
-        self.user = User.objects.create_user(username="tester4", password="testpassword")
-        self.user = User.objects.create_user(username="tester5", password="testpassword")
+        self.user2 = User.objects.create_user(username="tester2", password="testpassword")
         self.client.login(username="tester1", password="testpassword")
         self.url = reverse("accounts:user_profile", kwargs={"username": self.user.username})
         response = self.client.get(self.url)
-        tweet = Tweet.objects.filter(user=self.user)
-        actual_tweet = response.context["tweets"]
-        self.assertQuerysetEqual(actual_tweet, tweet)
+        self.assertEqual(
+            response.context["following"], FriendShip.objects.filter(from_user__username=self.user.username).count()
+        )
+        self.client.post(reverse("accounts:follow", kwargs={"username": "tester2"}))
+        response = self.client.get(self.url)
+        self.assertEqual(
+            response.context["follower"], FriendShip.objects.filter(to_user__username=self.user.username).count()
+        )
+        self.client.login(username="tester2", password="testpassword")
+        self.url = reverse("accounts:user_profile", kwargs={"username": self.user2.username})
+        response = self.client.get(self.url)
+        self.assertEqual(
+            response.context["following"], FriendShip.objects.filter(from_user__username=self.user2.username).count()
+        )
 
 
 # class TestUserProfileEditView(TestCase):
