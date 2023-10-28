@@ -19,6 +19,7 @@ class FriendShip(models.Model):
             # 自分自身はフォローできない
             CheckConstraint(check=~Q(from_user=F("to_user")), name="not_follow_myself"),
         ]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"{self.from_user} -> {self.to_user}"

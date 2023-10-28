@@ -143,7 +143,7 @@ FOLLOW_URL = "accounts:follow"
 
 UNFOLLOW_URL = "accounts:unfollow"
 
-SQL_DEBUG = True
+SQL_DEBUG = False
 
 if SQL_DEBUG:
 
