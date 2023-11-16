@@ -93,7 +93,9 @@ class FollowingListView(ListView):
     def get_queryset(self):
         return models.User.objects.filter(
             id__in=(
-                models.FriendShip.objects.values_list("to_user").filter(from_user__username=self.kwargs["username"])
+                models.FriendShip.objects.values_list("to_user")
+                .filter(from_user__username=self.kwargs["username"])
+                .order_by("-created_at")
             )
         )
 

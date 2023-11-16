@@ -409,7 +409,7 @@ class TestUnfollowView(TestCase):
 
     def test_failure_post_with_incorrect_user(self):
         invalid_data = {
-            "username": "invalid_user",
+            "username": "tester",
         }
         response = self.client.post(reverse("accounts:unfollow", kwargs=invalid_data))
         self.assertEqual(response.status_code, 404)

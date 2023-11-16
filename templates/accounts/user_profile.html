@@ -13,7 +13,7 @@
     {% csrf_token %}
     <button type="submit" name="unfollow">unfollow</button>
   </form>
-{% else %}
+{% elif username != request.user.username %}
   <form method="post" action="{% url 'accounts:follow' username %}">
     {% csrf_token %}
     <button type="submit" name="follow">follow</button>
