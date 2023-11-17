@@ -15,16 +15,7 @@ class TestHomeView(TestCase):
         self.user = User.objects.create_user(username="tester", password="testpassword")
         self.client.login(username="tester", password="testpassword")
         self.url = reverse(settings.HOME_URL)
-        tweet_data = {
-            "content": "test tweet",
-        }
-        response = self.client.post(reverse("tweets:create"), tweet_data)
-        self.assertRedirects(
-            response,
-            reverse(settings.HOME_URL),
-            status_code=302,
-            target_status_code=200,
-        )
+        Tweet.objects.create(user=self.user, content="test tweet")
 
     def test_success_get(self):
         response = self.client.get(reverse(settings.HOME_URL))

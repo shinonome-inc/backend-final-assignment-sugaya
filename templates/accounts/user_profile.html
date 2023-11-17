@@ -1,8 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %}Logout{% endblock %}
+{% block title %} {{ username }}'s profile {% endblock %}
 
 {% block content %}
+
+<h1> {{ username }} </h1>
+<a href="{%url 'accounts:following_list' username %}">following: {{ following }}</a>
+<a href="{%url 'accounts:follower_list' username %}">follower: {{ follower }}</a>
+
+{% if already_following %}
+  <form method="post" action="{% url 'accounts:unfollow' username %}">
+    {% csrf_token %}
+    <button type="submit" name="unfollow">unfollow</button>
+  </form>
+{% elif username != request.user.username %}
+  <form method="post" action="{% url 'accounts:follow' username %}">
+    {% csrf_token %}
+    <button type="submit" name="follow">follow</button>
+  </form>
+{% endif %}
 
 {% for tweet in tweets %}
   <hr>
